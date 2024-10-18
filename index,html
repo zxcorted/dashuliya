@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Message</title>
+    <style>
+        body {
+            background-color: #ffebee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            font-size: 24px;
+            color: #e91e63;
+            margin: 0;
+            text-align: center;
+        }
+
+        .message {
+            opacity: 0;
+            animation: fadeIn 3s ease-in forwards;
+            padding: 0 10px;
+        }
+
+        @keyframes fadeIn {
+            0% {opacity: 0;}
+            100% {opacity: 1;}
+        }
+
+        .image {
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 3s 3s ease-in forwards;
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+        }
+
+        .image img {
+            max-width: 100%; /* Максимальная ширина 100% */
+            max-height: 70vh; /* Максимальная высота 70% экрана */
+            border-radius: 15px;
+            object-fit: contain;
+            border: none;
+            display: block;
+            margin: 0 auto; /* Центрирование изображения */
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: pink;
+            transform: scale(1);
+            animation: float 2s ease-in-out forwards;
+        }
+
+        .heart:before, .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: pink;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart:after {
+            left: 10px;
+            top: 0;
+        }
+
+        @keyframes float {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(-100px) scale(1.2);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="message">
+        Малыш, ты самая прекрасная девочка на свете, и этот сайт — лишь малая часть того, как сильно я тебя люблю.
+    </div>
+
+    <div class="image">
+        <img src="маленькая.jpg" alt="Your Girlfriend's Photo" id="photo">
+    </div>
+
+    <script>
+        function createHeart(x, y) {
+            let heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = `${x}px`;
+            heart.style.top = `${y}px`;
+            document.querySelector('.image').appendChild(heart);
+            setTimeout(() => heart.remove(), 2000);
+        }
+
+        // Центрирование координат относительно изображения
+        document.querySelector('.image').addEventListener('click', function(e) {
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left - 10; // Коррекция для центра сердечка
+            const y = e.clientY - rect.top - 10;
+            createHeart(x, y);
+        });
+
+        document.querySelector('.image').addEventListener('touchstart', function(e) {
+            const rect = e.target.getBoundingClientRect();
+            const x = e.touches[0].clientX - rect.left - 10;
+            const y = e.touches[0].clientY - rect.top - 10;
+            createHeart(x, y);
+        });
+
+        // Анимация нескольких сердечек при загрузке
+        window.onload = function() {
+            const rect = document.querySelector('.image img').getBoundingClientRect();
+            setTimeout(function() {
+                createHeart(rect.width / 2 - 30, rect.height / 2 - 150);
+                createHeart(rect.width / 2 + 30, rect.height / 2 - 100);
+                createHeart(rect.width / 2, rect.height / 2 - 50);
+            }, 3500); // Сердечки появятся через 3.5 секунды после загрузки страницы
+        };
+    </script>
+
+</body>
+</html>

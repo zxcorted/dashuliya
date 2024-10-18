@@ -34,7 +34,6 @@
             margin-top: 20px;
             opacity: 0;
             animation: fadeIn 3s 3s ease-in forwards;
-            cursor: pointer;
             position: relative;
             display: inline-block;
         }
@@ -45,9 +44,10 @@
             border-radius: 15px;
             object-fit: contain;
             border: none;
-            user-select: none; /* Отключение выделения текста при клике */
             display: block;
             margin: 0 auto; /* Центрирование изображения */
+            user-select: none; /* Отключение выделения текста при клике */
+            outline: none; /* Убираем синий контур фокуса */
         }
 
         .heart {
@@ -111,14 +111,14 @@
         }
 
         // Центрирование координат относительно изображения
-        document.querySelector('.image').addEventListener('click', function(e) {
+        document.querySelector('.image img').addEventListener('click', function(e) {
             const rect = e.target.getBoundingClientRect();
             const x = e.clientX - rect.left - 10; // Коррекция для центра сердечка
             const y = e.clientY - rect.top - 10;
             createHeart(x, y);
         });
 
-        document.querySelector('.image').addEventListener('touchstart', function(e) {
+        document.querySelector('.image img').addEventListener('touchstart', function(e) {
             const rect = e.target.getBoundingClientRect();
             const x = e.touches[0].clientX - rect.left - 10;
             const y = e.touches[0].clientY - rect.top - 10;

@@ -5,260 +5,130 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Наша история любви</title>
     <style>
-        /* Основные стили */
         body {
-            background: linear-gradient(to top, #ffebee, #ffe6e6);
+            background: linear-gradient(to bottom, #ffcccc, #ffcce7);
             font-family: 'Cursive', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            height: 100vh;
-            color: #e91e63;
             margin: 0;
-            overflow-x: hidden;
-            overflow-y: auto;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #e91e63;
         }
 
-        /* Анимация плавного появления */
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(50px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Стиль контейнера */
-        .container {
-            margin-top: 50px;
-        }
-
-        /* Анимация для заголовков и текста */
-        h1, .date, #counter {
-            opacity: 0;
+        .slide-container {
+            text-align: center;
+            position: absolute;
+            width: 80%;
             animation: fadeIn 2s ease forwards;
         }
 
         h1 {
-            animation-delay: 0.5s;
             font-size: 3em;
+            margin: 0;
+            animation: slideIn 1s ease forwards;
         }
 
-        .date {
-            font-size: 36px;
-            margin-bottom: 20px;
-            font-weight: bold;
-            animation-delay: 1.5s;
-        }
-
-        /* Кнопка */
-        .btn {
-            display: none; /* Кнопка скрыта по умолчанию */
+        p {
+            font-size: 1.5em;
             margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 20px;
-            background-color: #ff4081;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #e91e63;
-        }
-
-        /* Анимация для счетчика */
-        @keyframes scaleUp {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        #counter {
-            font-size: 28px;
-            opacity: 0;
-            animation: scaleUp 2s ease forwards;
-            animation-delay: 2s;
-        }
-
-        /* Анимация появления галереи */
-        .gallery {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 50px;
-            flex-wrap: wrap;
-            opacity: 0;
             animation: fadeIn 2s ease forwards;
-            animation-delay: 4s;
+            animation-delay: 0.5s;
         }
 
-        .gallery img {
-            width: 250px;
-            height: 250px;
-            border-radius: 20px;
-            object-fit: cover;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .next-button {
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            color: white;
+            background-color: #e91e63;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            animation: fadeIn 2s ease forwards;
+            animation-delay: 1s;
+            transition: background-color 0.3s;
         }
 
-        .gallery img:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        .next-button:hover {
+            background-color: #d81b60;
         }
 
-        /* Анимация листьев */
-        .leaf {
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes heartFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .heart {
             position: absolute;
             width: 20px;
             height: 20px;
-            background-color: orange;
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            opacity: 0;
-            animation: floatLeaf 7s ease-in infinite;
+            background-color: #e91e63;
+            clip-path: polygon(50% 0%, 100% 35%, 75% 100%, 50% 80%, 25% 100%, 0% 35%);
+            animation: heartFall 5s infinite;
         }
 
-        @keyframes floatLeaf {
-            0% {
-                transform: scale(0.5) translateY(0);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.5) translateY(400px) rotate(180deg);
-                opacity: 0;
-            }
-        }
-
-        /* Фейерверки */
-        .firework {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            animation: fireworkAnimation 1.5s ease forwards;
-            opacity: 0;
-        }
-
-        @keyframes fireworkAnimation {
-            0% {
-                transform: scale(0);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(10);
-                opacity: 0;
-            }
-        }
-
-        /* Контейнер для фейерверков */
-        .fireworks-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 999;
-        }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>Малыш,</h1>
-        <div class="date" id="date-text">Мы познакомились 16 марта 2024 года</div>
-        <button class="btn" id="showCounter">Хочешь узнать сколько мы уже вместе?</button>
-        <div id="counter"></div>
+    <div class="slide-container" id="slide">
+        <h1>Малышка,</h1>
+        <p>Мы познакомились 16 марта 2024 года</p>
+        <button class="next-button" onclick="nextSlide()">Далее</button>
     </div>
 
-    <!-- Галерея фотографий -->
-    <div class="gallery">
-        <img src="маленькая.jpg" alt="Фото 1">
-        <img src="маленькая2.jpg" alt="Фото 2">
-        <img src="маленькая3.jpg" alt="Фото 3">
-    </div>
+    <!-- Добавление падающих сердечек -->
+    <script>
+        function createHearts() {
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+                document.body.appendChild(heart);
 
-    <!-- Добавим осенние листики -->
-    <div class="leaf" style="left: 20%; animation-duration: 6s;"></div>
-    <div class="leaf" style="left: 50%; animation-duration: 8s;"></div>
-    <div class="leaf" style="left: 80%; animation-duration: 7s;"></div>
-
-    <!-- Контейнер для фейерверков -->
-    <div class="fireworks-container" id="fireworks-container"></div>
-
-<script>
-        // Функция для отображения даты с анимацией
-        function showDateAndButton() {
-            const dateText = document.getElementById('date-text');
-            const button = document.getElementById('showCounter');
-
-            // Показать текст "Мы познакомились" с анимацией после текста "Малыш"
-            setTimeout(() => {
-                dateText.style.opacity = '1';
-                dateText.style.animation = 'fadeIn 2s ease forwards';
-            }, 2000);  // Появляется через 2 секунды после "Малыш"
-
-            // Показать кнопку через 4 секунды после появления даты
-            setTimeout(() => {
-                button.style.display = 'inline-block';
-            }, 4000);
-        }
-
-        // Функция для показа счетчика
-        function showCounter() {
-            calculateDays();
-            document.getElementById('counter').style.opacity = '1';
-            document.getElementById('counter').style.animation = 'scaleUp 2s ease forwards';
-            document.getElementById('counter').style.animationDelay = '0s';
-            createFireworks();
-        }
-
-        // Функция для расчета и отображения количества дней
-        function calculateDays() {
-            const startDate = new Date('2024-03-16');
-            const today = new Date();
-            const diffTime = Math.abs(today - startDate);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            let currentNumber = 0;
-            const counterElement = document.getElementById('counter');
-            const targetNumber = diffDays;
-
-            function updateCounter() {
-                currentNumber += 1;
-                counterElement.textContent = `Мы вместе уже ${currentNumber} дней!`;
-
-                if (currentNumber < targetNumber) {
-                    requestAnimationFrame(updateCounter);
-                }
-            }
-
-            updateCounter();
-        }
-
-        // Функция для создания фейерверков
-        function createFireworks() {
-            const fireworksContainer = document.getElementById('fireworks-container');
-            const colors = ['#ff4081', '#ffeb3b', '#4caf50', '#2196f3', '#ff9800'];
-
-            for (let i = 0; i < 10; i++) {
-                const firework = document.createElement('div');
-                firework.classList.add('firework');
-                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                firework.style.left = Math.random() * 100 + 'vw';
-                firework.style.top = Math.random() * 100 + 'vh';
-                fireworksContainer.appendChild(firework);
-
-                setTimeout(() => {
-                    firework.remove();
-                }, 1500);
+                heart.addEventListener('animationend', () => {
+                    heart.remove();
+                });
             }
         }
+        setInterval(createHearts, 500);
 
-        // Вызов функции при загрузке страницы
-        showDateAndButton();
+        const slides = [
+            { header: "Малышка,", text: "Мы познакомились 16 марта 2024 года" },
+            { header: "Киця,", text: "Я впервые назвал тебя так 20 марта 2024 года" },
+            { header: "Я люблю тебя,", text: "Мы сказали это друг другу 1 апреля 2024 года" }
+        ];
 
-        // Обработчик для кнопки
-        document.getElementById('showCounter').addEventListener('click', showCounter);
-</script>
+        let currentSlide = 0;
+
+        function nextSlide() {
+            currentSlide++;
+            if (currentSlide >= slides.length) currentSlide = 0;
+            const slideContainer = document.getElementById('slide');
+            slideContainer.innerHTML = `
+                <h1>${slides[currentSlide].header}</h1>
+                <p>${slides[currentSlide].text}</p>
+                <button class="next-button" onclick="nextSlide()">Далее</button>
+            `;
+        }
+    </script>
 </body>
 </html>

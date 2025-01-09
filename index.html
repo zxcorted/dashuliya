@@ -120,7 +120,7 @@
             setTimeout(() => sticker.remove(), 1000);
         });
         function createHearts() {
-            for (let i = 0; i < 5; i++) { // Фиксированное количество сердечек
+            for (let i = 0; i < 2; i++) { // Фиксированное количество сердечек
                 const heart = document.createElement('div');
                 heart.classList.add('heart');
                 heart.style.left = Math.random() * 100 + 'vw';
@@ -133,7 +133,7 @@
                 });
             }
         }
-        setInterval(createHearts, 2000);
+        setInterval(createHearts, 3500);
 
         const slides = [
             { header: "Малышка,", text: "Мы познакомились 16 марта 2024 года" },
